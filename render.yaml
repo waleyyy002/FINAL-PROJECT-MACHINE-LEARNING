@@ -3,6 +3,7 @@ services:
     name: customer-churn-api
     runtime: docker
     plan: free
+    rootDir: .
     dockerfilePath: ./Dockerfile
     dockerContext: .
     healthCheckPath: /health
