@@ -4,6 +4,10 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import pandas as pd
 import joblib
+from pathlib import Path
+
+
+BASE_DIR = Path(__file__).resolve().parent
 
 
 # ==========================================
@@ -11,7 +15,7 @@ import joblib
 # ==========================================
 
 churn_model = joblib.load(
-    "customer_churn_prediction.pkl"
+    BASE_DIR / "customer_churn_prediction.pkl"
 )
 
 model = churn_model["model"]
@@ -44,7 +48,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 
 
 # ==========================================
@@ -81,7 +85,7 @@ class CustomerData(BaseModel):
 
 @app.get("/")
 def home():
-    return FileResponse("static/index.html")
+    return FileResponse(BASE_DIR / "static" / "index.html")
 
 
 # ==========================================
