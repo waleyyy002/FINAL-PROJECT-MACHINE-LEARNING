@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import pandas as pd
 import joblib
@@ -42,6 +44,8 @@ app = FastAPI(
     version="1.0.0"
 )
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 # ==========================================
 # INPUT DATA MODEL
@@ -77,12 +81,7 @@ class CustomerData(BaseModel):
 
 @app.get("/")
 def home():
-
-    return {
-        "message": "Customer Churn Prediction API",
-        "status": "running",
-        "docs": "/docs"
-    }
+    return FileResponse("static/index.html")
 
 
 # ==========================================

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Churn Signal Desk</title>
+  <meta name="description" content="Customer churn risk prediction dashboard">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Churn Signal Desk home">
+        <span class="brand-mark">CS</span>
+        <span>Churn Signal <strong>Desk</strong></span>
+      </a>
+      <div class="topbar-meta"><span class="status-dot"></span> Model online <span class="divider"></span> v1.0</div>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">Customer intelligence / risk review</p>
+          <h1>See the signal<br><em>before they leave.</em></h1>
+          <p class="lede">Turn a customer snapshot into a clear churn risk assessment. Tune the profile, then send it through the trained model.</p>
+        </div>
+        <div class="intro-note"><span class="note-number">01</span><span>Predictive<br>assessment</span></div>
+      </section>
+
+      <div class="workspace">
+        <form id="prediction-form" class="form-panel">
+          <div class="panel-heading"><div><p class="eyebrow">Input profile</p><h2>Customer snapshot</h2></div><span class="required">All fields required</span></div>
+
+          <fieldset>
+            <legend><span>01</span> Account context</legend>
+            <div class="field-grid">
+              <label>Gender<select name="Gender"><option>Female</option><option>Male</option></select></label>
+              <label>Senior citizen<select name="Senior_Citizen"><option value="No">No</option><option value="Yes">Yes</option></select></label>
+              <label>Partner<select name="Partner"><option>No</option><option>Yes</option></select></label>
+              <label>Dependents<select name="Dependents"><option>No</option><option>Yes</option></select></label>
+              <label>Tenure (months)<input name="Tenure_Months" type="number" min="0" value="12" required></label>
+              <label>CLTV score<input name="CLTV" type="number" min="0" value="5000" required></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span>02</span> Services</legend>
+            <div class="field-grid">
+              <label>Phone service<select name="Phone_Service"><option>Yes</option><option>No</option></select></label>
+              <label>Multiple lines<select name="Multiple_Lines"><option>No</option><option>Yes</option><option>No phone service</option></select></label>
+              <label>Internet service<select name="Internet_Service"><option>DSL</option><option>Fiber optic</option><option>No</option></select></label>
+              <label>Online security<select name="Online_Security"><option>No</option><option>Yes</option><option>No internet service</option></select></label>
+              <label>Online backup<select name="Online_Backup"><option>No</option><option>Yes</option><option>No internet service</option></select></label>
+              <label>Device protection<select name="Device_Protection"><option>No</option><option>Yes</option><option>No internet service</option></select></label>
+              <label>Tech support<select name="Tech_Support"><option>No</option><option>Yes</option><option>No internet service</option></select></label>
+              <label>Streaming TV<select name="Streaming_TV"><option>No</option><option>Yes</option><option>No internet service</option></select></label>
+              <label>Streaming movies<select name="Streaming_Movies"><option>No</option><option>Yes</option><option>No internet service</option></select></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span>03</span> Billing & contract</legend>
+            <div class="field-grid">
+              <label>Contract<select name="Contract"><option>Month-to-month</option><option>One year</option><option>Two year</option></select></label>
+              <label>Paperless billing<select name="Paperless_Billing"><option>Yes</option><option>No</option></select></label>
+              <label>Payment method<select name="Payment_Method"><option>Electronic check</option><option>Mailed check</option><option>Bank transfer (automatic)</option><option>Credit card (automatic)</option></select></label>
+              <label>Monthly charges<input name="Monthly_Charges" type="number" min="0" step="0.01" value="70.00" required></label>
+              <label>Total charges<input name="Total_Charges" type="number" min="0" step="0.01" value="840.00" required></label>
+            </div>
+          </fieldset>
+
+          <button class="predict-button" type="submit"><span id="button-label">Run risk assessment</span><span class="arrow">&#8599;</span></button>
+          <p id="form-error" class="form-error" role="alert"></p>
+        </form>
+
+        <aside class="result-panel" aria-live="polite">
+          <div class="result-top"><span class="eyebrow">Assessment output</span><span class="live-pill">READY</span></div>
+          <div id="empty-result" class="empty-result"><div class="orbit"><span></span></div><h2>Awaiting profile</h2><p>Complete the snapshot and run an assessment to reveal the model's signal.</p></div>
+          <div id="prediction-result" class="prediction-result hidden">
+            <p class="result-kicker">Predicted outcome</p>
+            <h2 id="prediction-label">No Churn</h2>
+            <div class="probability-wrap"><div class="probability-head"><span>Churn probability</span><strong id="probability-value">0%</strong></div><div class="meter"><span id="probability-meter"></span></div></div>
+            <div class="result-summary"><span class="summary-icon">i</span><p id="result-copy">The current customer profile shows a lower likelihood of churn.</p></div>
+            <button id="reset-button" class="reset-button" type="button">Reset assessment <span>&#8634;</span></button>
+          </div>
+          <div class="result-footer"><span>Powered by trained ML model</span><a href="/docs">API docs &#8599;</a></div>
+        </aside>
+      </div>
+    </main>
+    <footer><span>CHURN SIGNAL DESK</span><span>Customer retention intelligence</span></footer>
+  </div>
+</body>
+</html>
